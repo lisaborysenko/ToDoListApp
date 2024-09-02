@@ -1,13 +1,15 @@
 import { ControlPoint } from '@mui/icons-material';
 import { Button, IconButton, TextField } from '@mui/material';
 import { pink, purple, yellow } from '@mui/material/colors';
+import React from 'react';
 import { ChangeEvent, KeyboardEvent, useState } from 'react';
 
 type AddItemFormType = {
   addItem: (title: string) => void;
 };
 
-export function AddItemForm(props: AddItemFormType) {
+export const AddItemForm = React.memo((props: AddItemFormType) => {
+  console.log('AddItemForm is called');
   let [newTaskTitle, setNewTaskTitle] = useState('');
   let [error, setError] = useState<string | null>(null);
 
@@ -23,7 +25,10 @@ export function AddItemForm(props: AddItemFormType) {
     setNewTaskTitle(e.currentTarget.value);
   };
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    setError(null);
+    if (error !== null) {
+      setError(null);
+    }
+
     if (e.key === 'Enter') {
       addTask();
       setNewTaskTitle('');
@@ -60,4 +65,4 @@ export function AddItemForm(props: AddItemFormType) {
       </IconButton>
     </div>
   );
-}
+});
